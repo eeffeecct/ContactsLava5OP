@@ -87,7 +87,7 @@ int main() {
 
     findAddressAndPhoneByName(contacts, findAddressAndPhone, contactCount);
 */
-
+//eprjflkekrjf
 /* B:
     cout << "Введите телефон или адресс для поиска:";
     char findFIObyAddressOrPhone[MAX_ADDRESS_PHONE_LEN];
