@@ -13,7 +13,6 @@ struct Contact {
     int age;
     char gender; // M/W
     int height;
-
 };
 
 bool checkName(Contact contact, const char search[]) {
@@ -50,57 +49,100 @@ void findAddressAndPhoneByName(Contact* contacts, char search[], int sizeContact
             return;
         }
     }
-    cout << "Ничего не найдено";
+    cout << "Nothing found" << endl;
 }
 
 void findFIO(Contact* contacts, char search[], int sizeContact) {
     for (int i = 0; i < sizeContact; i++) {
         if (checkAddress(contacts[i], search) || checkPhone(contacts[i], search)) {
-            cout << contacts[i].fullName;
+            cout << contacts[i].fullName << endl;
             return;
         }
     }
-    cout << "Ничего не найдено";
+    cout << "Nothing found" << endl;
 }
 
-
+// c I
 void averageHeight(Contact* contacts, int sizeContact) {
     double height = 0;
     int countPeopleByAge = 0;
+
     for (int i = 0; i < sizeContact; i++) {
         if (contacts[i].age >= 15 && contacts[i].age <= 20) {
-            height+=contacts[i].height;
+            height += contacts[i].height;
             countPeopleByAge++;
         }
     }
-    height /= countPeopleByAge;
-    cout << "1. Средний рост мужчин и женщин в группе 15-20 лет: " << height << endl;
+    if (countPeopleByAge > 0) {
+        height /= countPeopleByAge;
+        cout << "1. Average height of males and females in the 15-20 years group: " << height << endl;
+    } else {
+        cout << "1. There are no people in the 15-20 year old group." << endl;
+    }
 
     height = 0;
     countPeopleByAge = 0;
     for (int i = 0; i < sizeContact; i++) {
         if (contacts[i].age >= 21 && contacts[i].age <= 25) {
-            height+=contacts[i].height;
+            height += contacts[i].height;
             countPeopleByAge++;
         }
     }
-    height /= countPeopleByAge;
-    cout << "2. Средний рост мужчин и женщин в группе 21-25 лет: " << height << endl;
+    if (countPeopleByAge > 0) {
+        height /= countPeopleByAge;
+        cout << "2. Average height of males and females in the 21-25 years group: " << height << endl;
+    } else {
+        cout << "2. There are no people in the 21-25 year old group. " << endl;
+    }
 
     height = 0;
     countPeopleByAge = 0;
     for (int i = 0; i < sizeContact; i++) {
         if (contacts[i].age >= 26 && contacts[i].age <= 30) {
-            height+=contacts[i].height;
+            height += contacts[i].height;
             countPeopleByAge++;
         }
     }
-    height /= countPeopleByAge;
-    cout << "3. Средний рост мужчин и женщин в группе 26-30 лет: " << height << endl;
-
+    if (countPeopleByAge > 0) {
+        height /= countPeopleByAge;
+        cout << "3. Average height of males and females in the 26-30 years group: " << height << endl;
+    } else {
+        cout << "3. There are no people in the 26-30 year old group." << endl;
+    }
 }
 
+// c II
+void highestLowest(Contact* contacts, int sizeContact) {
+    int highest = 0;
+    int lowest = 200;
+    for (int i = 0; i < sizeContact; i++) {
+        if (contacts[i].height > highest) {
+            highest = contacts[i].height;
+        }
+        if (contacts[i].height < lowest) {
+            lowest = contacts[i].height;
+        }
+    }
+    cout << "The highest height: " << highest << endl;
+    cout << "The lowest height: " << lowest << endl;
+}
 
+// c III
+void sameHeightAndAge(Contact* contacts, int sizeContact) {
+    for (int i = 0; i < sizeContact; i++) {
+        for (int j = i + 1; j < sizeContact; j++) {
+            if (contacts[i].age == contacts[j].age &&
+                contacts[i].height == contacts[j].height &&
+                contacts[i].gender != contacts[j].gender) {
+                cout << "Match found:" << endl;
+                cout << "1. " << contacts[i].fullName << " (Age: " << contacts[i].age
+                     << ", Height: " << contacts[i].height << ", Gender: " << contacts[i].gender << ")" << endl;
+                cout << "2. " << contacts[j].fullName << " (Age: " << contacts[j].age
+                     << ", Height: " << contacts[j].height << ", Gender: " << contacts[j].gender << ")" << endl;
+            }
+        }
+    }
+}
 
 int main() {
     int contactCount = 10;
@@ -116,28 +158,29 @@ int main() {
     {"Niklas Schneider Johannesson", "Germany, Berlin, Friedrichstrasse 101", "+491700000000", 25, 'M', 185},
     {"John Smith Williamovich", "USA, New York, 5th Avenue, 678", "+12120000000", 22, 'M', 198},
     {"Marie Dubois Clairette", "France, Paris, Rue de Rivoli, 34", "+33170000000", 28, 'W', 165},
-    {"Hiroshi Tanaka Harutoshi", "Japan, Tokyo, Chiyoda, 1-1", "+81300000000", 18, 'W', 173}
-};
+    {"Hiroshi Tanaka Harutoshi", "Japan, Tokyo, Chiyoda, 1-1", "+81300000000", 18, 'W', 173}};
 
-/* A:
-    cout << "Введите Ф.И.О для поиска:";
+
+    cout << "Enter your full name for the search:";
     char findAddressAndPhone[MAX_NAME_LEN];
     cin.getline(findAddressAndPhone, MAX_NAME_LEN);
-
     findAddressAndPhoneByName(contacts, findAddressAndPhone, contactCount);
-*/
+    cout << endl;
 
-/* B:
-    cout << "Введите телефон или адресс для поиска:";
+
+
+    cout << "Enter phone number or address for the search:";
     char findFIObyAddressOrPhone[MAX_ADDRESS_PHONE_LEN];
     cin.getline(findFIObyAddressOrPhone, MAX_ADDRESS_PHONE_LEN);
-
     findFIO(contacts, findFIObyAddressOrPhone, contactCount);
-*/
+    cout << endl;
 
     averageHeight(contacts, contactCount);
+    cout << endl;
+    highestLowest(contacts, contactCount);
+    cout << endl;
+    sameHeightAndAge(contacts, contactCount);
 
     delete[] contacts;
     return 0;
 }
-
