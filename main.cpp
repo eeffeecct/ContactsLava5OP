@@ -63,6 +63,45 @@ void findFIO(Contact* contacts, char search[], int sizeContact) {
     cout << "Ничего не найдено";
 }
 
+
+void averageHeight(Contact* contacts, int sizeContact) {
+    double height = 0;
+    int countPeopleByAge = 0;
+    for (int i = 0; i < sizeContact; i++) {
+        if (contacts[i].age >= 15 && contacts[i].age <= 20) {
+            height+=contacts[i].height;
+            countPeopleByAge++;
+        }
+    }
+    height /= countPeopleByAge;
+    cout << "1. Средний рост мужчин и женщин в группе 15-20 лет: " << height << endl;
+
+    height = 0;
+    countPeopleByAge = 0;
+    for (int i = 0; i < sizeContact; i++) {
+        if (contacts[i].age >= 21 && contacts[i].age <= 25) {
+            height+=contacts[i].height;
+            countPeopleByAge++;
+        }
+    }
+    height /= countPeopleByAge;
+    cout << "2. Средний рост мужчин и женщин в группе 21-25 лет: " << height << endl;
+
+    height = 0;
+    countPeopleByAge = 0;
+    for (int i = 0; i < sizeContact; i++) {
+        if (contacts[i].age >= 26 && contacts[i].age <= 30) {
+            height+=contacts[i].height;
+            countPeopleByAge++;
+        }
+    }
+    height /= countPeopleByAge;
+    cout << "3. Средний рост мужчин и женщин в группе 26-30 лет: " << height << endl;
+
+}
+
+
+
 int main() {
     int contactCount = 10;
 
@@ -77,7 +116,7 @@ int main() {
     {"Niklas Schneider Johannesson", "Germany, Berlin, Friedrichstrasse 101", "+491700000000", 25, 'M', 185},
     {"John Smith Williamovich", "USA, New York, 5th Avenue, 678", "+12120000000", 22, 'M', 198},
     {"Marie Dubois Clairette", "France, Paris, Rue de Rivoli, 34", "+33170000000", 28, 'W', 165},
-    {"Hiroshi Tanaka Harutoshi", "Japan, Tokyo, Chiyoda, 1-1", "+81300000000", }
+    {"Hiroshi Tanaka Harutoshi", "Japan, Tokyo, Chiyoda, 1-1", "+81300000000", 18, 'W', 173}
 };
 
 /* A:
@@ -87,7 +126,7 @@ int main() {
 
     findAddressAndPhoneByName(contacts, findAddressAndPhone, contactCount);
 */
-//eprjflkekrjf
+
 /* B:
     cout << "Введите телефон или адресс для поиска:";
     char findFIObyAddressOrPhone[MAX_ADDRESS_PHONE_LEN];
@@ -95,6 +134,8 @@ int main() {
 
     findFIO(contacts, findFIObyAddressOrPhone, contactCount);
 */
+
+    averageHeight(contacts, contactCount);
 
     delete[] contacts;
     return 0;
