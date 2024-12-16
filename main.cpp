@@ -2,19 +2,20 @@
 
 using namespace std;
 
-const int MAX_NAME_LEN = 100;
-const int MAX_ADDRESS_PHONE_LEN = 100;
+const int MAX_NAME_LEN = 100; // Максимальная длина имени
+const int MAX_ADDRESS_PHONE_LEN = 100; // Максимальная длина адреса и телефона
 
 // Структура контакта
 struct Contact {
-    char fullName[MAX_NAME_LEN];
-    char address[MAX_ADDRESS_PHONE_LEN];
-    char phone[MAX_ADDRESS_PHONE_LEN];
-    int age;
-    char gender; // M/W
-    int height;
+    char fullName[MAX_NAME_LEN]; // Полное имя
+    char address[MAX_ADDRESS_PHONE_LEN]; // Адрес
+    char phone[MAX_ADDRESS_PHONE_LEN]; // Телефон
+    int age; // Возраст
+    char gender; // Пол (M/W)
+    int height; // Рост
 };
 
+// Функция для проверки совпадения имени
 bool checkName(Contact contact, const char search[]) {
     for (int i = 0; contact.fullName[i] != '\0'; i++) {
         if (contact.fullName[i] != search[i]) {
@@ -24,6 +25,7 @@ bool checkName(Contact contact, const char search[]) {
     return true;
 }
 
+// Функция для проверки совпадения телефона
 bool checkPhone(Contact contact, const char search[]) {
     for (int i = 0; contact.phone[i] != '\0'; i++) {
         if (contact.phone[i] != search[i]) {
@@ -33,6 +35,7 @@ bool checkPhone(Contact contact, const char search[]) {
     return true;
 }
 
+// Функция для проверки совпадения адреса
 bool checkAddress(Contact contact, const char search[]) {
     for (int i = 0; contact.address[i] != '\0'; i++) {
         if (contact.address[i] != search[i]) {
@@ -42,6 +45,7 @@ bool checkAddress(Contact contact, const char search[]) {
     return true;
 }
 
+// Поиск адреса и телефона по имени
 void findAddressAndPhoneByName(Contact* contacts, char search[], int sizeContact) {
     for (int i = 0; i < sizeContact; i++) {
         if (checkName(contacts[i], search)) {
@@ -52,6 +56,7 @@ void findAddressAndPhoneByName(Contact* contacts, char search[], int sizeContact
     cout << "Nothing found" << endl;
 }
 
+// Поиск ФИО по адресу или телефону
 void findFIO(Contact* contacts, char search[], int sizeContact) {
     for (int i = 0; i < sizeContact; i++) {
         if (checkAddress(contacts[i], search) || checkPhone(contacts[i], search)) {
@@ -62,11 +67,12 @@ void findFIO(Contact* contacts, char search[], int sizeContact) {
     cout << "Nothing found" << endl;
 }
 
-// c I
+// Вычисление среднего роста по возрастным группам
 void averageHeight(Contact* contacts, int sizeContact) {
-    double height = 0;
-    int countPeopleByAge = 0;
+    double height = 0; // Сумма роста
+    int countPeopleByAge = 0; // Количество людей в группе
 
+    // Группа 15-20 лет
     for (int i = 0; i < sizeContact; i++) {
         if (contacts[i].age >= 15 && contacts[i].age <= 20) {
             height += contacts[i].height;
@@ -80,6 +86,7 @@ void averageHeight(Contact* contacts, int sizeContact) {
         cout << "1. There are no people in the 15-20 year old group." << endl;
     }
 
+    // Группа 21-25 лет
     height = 0;
     countPeopleByAge = 0;
     for (int i = 0; i < sizeContact; i++) {
@@ -95,6 +102,7 @@ void averageHeight(Contact* contacts, int sizeContact) {
         cout << "2. There are no people in the 21-25 year old group. " << endl;
     }
 
+    // Группа 26-30 лет
     height = 0;
     countPeopleByAge = 0;
     for (int i = 0; i < sizeContact; i++) {
@@ -111,10 +119,10 @@ void averageHeight(Contact* contacts, int sizeContact) {
     }
 }
 
-// c II
+// Поиск самого высокого и низкого роста
 void highestLowest(Contact* contacts, int sizeContact) {
-    int highest = 0;
-    int lowest = 200;
+    int highest = 0; // Максимальный рост
+    int lowest = 200; // Минимальный рост
     for (int i = 0; i < sizeContact; i++) {
         if (contacts[i].height > highest) {
             highest = contacts[i].height;
@@ -127,7 +135,7 @@ void highestLowest(Contact* contacts, int sizeContact) {
     cout << "The lowest height: " << lowest << endl;
 }
 
-// c III
+// Поиск людей с одинаковыми ростом и возрастом разного пола
 void sameHeightAndAge(Contact* contacts, int sizeContact) {
     for (int i = 0; i < sizeContact; i++) {
         for (int j = i + 1; j < sizeContact; j++) {
@@ -145,9 +153,9 @@ void sameHeightAndAge(Contact* contacts, int sizeContact) {
 }
 
 int main() {
-    int contactCount = 10;
+    int contactCount = 10; // Количество контактов
 
-    // массив типа Contact
+    // Инициализация массива контактов
     Contact* contacts = new Contact[contactCount] {
     {"Timofey Tereschenko Tereschenko", "Russia, Samara, Samarskaya street, 63", "+79390000000", 18, 'M', 175},
     {"George Poletaev Denisovich", "Argentina, Buenos Aires, Av. Sta. Fe 1960", "+5493517078534", 17, 'M', 180},
@@ -160,27 +168,32 @@ int main() {
     {"Marie Dubois Clairette", "France, Paris, Rue de Rivoli, 34", "+33170000000", 28, 'W', 165},
     {"Hiroshi Tanaka Harutoshi", "Japan, Tokyo, Chiyoda, 1-1", "+81300000000", 18, 'W', 173}};
 
-
+    // Ввод имени для поиска
     cout << "Enter your full name for the search:";
     char findAddressAndPhone[MAX_NAME_LEN];
     cin.getline(findAddressAndPhone, MAX_NAME_LEN);
     findAddressAndPhoneByName(contacts, findAddressAndPhone, contactCount);
     cout << endl;
 
-
-
+    // Ввод телефона или адреса для поиска
     cout << "Enter phone number or address for the search:";
     char findFIObyAddressOrPhone[MAX_ADDRESS_PHONE_LEN];
     cin.getline(findFIObyAddressOrPhone, MAX_ADDRESS_PHONE_LEN);
     findFIO(contacts, findFIObyAddressOrPhone, contactCount);
     cout << endl;
 
+    // Вывод среднего роста
     averageHeight(contacts, contactCount);
     cout << endl;
+
+    // Вывод самого высокого и низкого роста
     highestLowest(contacts, contactCount);
     cout << endl;
+
+    // Поиск людей с одинаковыми ростом и возрастом разного пола
     sameHeightAndAge(contacts, contactCount);
 
+    // Удаление массива контактов
     delete[] contacts;
     return 0;
 }
